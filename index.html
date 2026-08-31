@@ -1,0 +1,1083 @@
+<title>오늘의 똥 운세 뽑기</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style id="pagecss">
+*,*::before,*::after{box-sizing:border-box}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+:root{
+  --ground:#EBDCC3; --card:#EBDCC3; --ink:#37281A; --ink-soft:#7A6647;
+  --rule:#D2BE9C; --accent:#B85220; --gold:#A97C08; --btn:#553517; --btn-ink:#F6EBD8;
+  --dish:#FAF1DE; --dish-rim:#E3D2B2; --shadow:rgba(60,44,20,.16); --bar:#D9C7A6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#221A12; --card:#221A12; --ink:#F1E7D6; --ink-soft:#A9977C;
+    --rule:#413424; --accent:#F0894A; --gold:#EEB93A; --btn:#7E5430; --btn-ink:#F8EFDF; --btn:#7E5430; --btn-ink:#F8EFDF;
+    --dish:#EFE3CB; --dish-rim:#D3C3A4; --shadow:rgba(0,0,0,.6); --bar:#413424;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#221A12; --card:#221A12; --ink:#F1E7D6; --ink-soft:#A9977C;
+  --rule:#413424; --accent:#F0894A; --gold:#EEB93A;
+  --dish:#EFE3CB; --dish-rim:#D3C3A4; --shadow:rgba(0,0,0,.6); --bar:#413424;
+}
+
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:34px 20px 90px}
+
+.masthead{display:flex;flex-direction:column;gap:10px}
+.stampline{display:flex;justify-content:flex-end;align-items:baseline;gap:12px;flex-wrap:wrap}
+.code{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;color:var(--btn)}
+.today{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;color:var(--ink-soft);
+  cursor:default;user-select:none;-webkit-user-select:none}
+.langBtn{appearance:none;cursor:pointer;border:1.5px solid var(--ink-soft);border-radius:999px;
+  background:transparent;color:var(--ink-soft);font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.08em;padding:3px 11px;line-height:1.5;
+  transition:opacity .12s ease,border-color .12s ease,color .12s ease}
+.langBtn:hover{opacity:.82;border-color:var(--accent);color:var(--accent)}
+.langBtn:active{opacity:.68}
+.langBtn:focus-visible{outline:3px solid var(--btn);outline-offset:3px}
+h1{font-family:Jua,"Apple SD Gothic Neo",sans-serif;font-weight:400;
+  font-size:clamp(52px,15vw,88px);line-height:.92;letter-spacing:-.02em;margin:0;
+  color:var(--btn);text-wrap:balance}
+.sub{font-size:clamp(13px,3.2vw,15px);color:var(--ink-soft);margin:8px 0 0}
+.hr{height:1px;background:var(--rule);border:0;margin:20px 0 0}
+
+.sheet{margin-top:8px}
+.sect{padding:26px 0}
+.stage{display:flex;flex-direction:column;align-items:center;padding-top:34px}
+
+.dish{width:288px;height:288px;flex:none;position:relative;display:grid;place-items:center}
+.dish svg{width:98%;height:98%;display:block;overflow:visible}
+#buttBody{transition:transform .2s cubic-bezier(.34,1.56,.64,1);transform-box:fill-box;transform-origin:50% 100%}
+.dish.opening #buttBody{transform:scaleX(.84) scaleY(1.1) translateY(7px)}
+#popOrb{opacity:0;transform-box:fill-box;transform-origin:50% 50%;
+  filter:drop-shadow(0 0 5px rgba(255,205,110,.95)) drop-shadow(0 0 11px rgba(181,121,60,.75))}
+@keyframes orbDrop{0%{opacity:0;transform:translateY(0) scale(.5)}
+  15%{opacity:1;transform:translateY(4px) scale(1)}
+  85%{opacity:1;transform:translateY(108px) scale(.9)}
+  100%{opacity:0;transform:translateY(118px) scale(.6)}}
+.dish.opening #popOrb{animation:orbDrop .22s ease-in forwards}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(255,250,235,.95)}100%{box-shadow:0 0 0 46px rgba(255,250,235,0)}}
+.dish.reveal::after{content:"";position:absolute;inset:0;border-radius:50%;animation:flash .65s ease-out;pointer-events:none;z-index:2}
+@keyframes rayburst{0%{transform:scale(.1) rotate(0deg);opacity:0}16%{opacity:1}100%{transform:scale(2.5) rotate(28deg);opacity:0}}
+.dish.reveal::before{content:"";position:absolute;inset:-35%;border-radius:50%;pointer-events:none;opacity:0;
+  background:
+    radial-gradient(circle 5px at 22% 28%, #fff 97%, transparent 100%),
+    radial-gradient(circle 4px at 76% 18%, #fff 97%, transparent 100%),
+    radial-gradient(circle 6px at 82% 68%, #fff 97%, transparent 100%),
+    radial-gradient(circle 4px at 28% 80%, #fff 97%, transparent 100%),
+    radial-gradient(circle 5px at 54% 10%, #fff 97%, transparent 100%),
+    radial-gradient(circle 4px at 12% 55%, #fff 97%, transparent 100%),
+    repeating-conic-gradient(from 0deg, rgba(255,248,222,.95) 0deg 7deg, transparent 7deg 22deg);
+  animation:rayburst .6s ease-out}
+@keyframes svgFlash{0%{filter:brightness(2.8) saturate(.2)}100%{filter:brightness(1) saturate(1)}}
+.dish.reveal svg{animation:svgFlash .45s ease-out}
+
+@keyframes rattle{0%,100%{transform:none}25%{transform:translate(-5px,2px) rotate(-3deg)}
+  50%{transform:translate(5px,-3px) rotate(3deg)}75%{transform:translate(-3px,-2px) rotate(-2deg)}}
+.dish.shaking{animation:rattle .3s linear infinite}
+@keyframes pop{0%{opacity:0;transform:scale(.7) translateY(-22px)}
+  60%{opacity:1;transform:scale(1.06) translateY(6px)}100%{transform:none;opacity:1}}
+.pop{animation:pop .55s cubic-bezier(.3,1.3,.5,1) both}
+
+.lever{margin-top:26px;appearance:none;cursor:pointer;border:0;border-radius:999px;
+  font-family:Jua,sans-serif;font-size:23px;color:var(--btn-ink);background:var(--btn);padding:14px 46px;
+  transition:opacity .12s ease}
+.lever:hover{opacity:.86}
+.lever:active{opacity:.74}
+.lever:focus-visible,.ledger-btn:focus-visible{outline:3px solid var(--btn);outline-offset:3px}
+.hint{margin:12px 0 0;font-size:12.5px;color:var(--ink-soft);text-align:center}
+
+.result{width:100%;margin-top:24px;display:flex;flex-direction:column;align-items:center}
+.gradeRow{display:flex;align-items:center;gap:9px}
+.grade{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+  border:2px solid var(--accent);color:var(--accent);padding:2px 9px;border-radius:999px}
+.grade.top{border-color:var(--gold);color:var(--gold)}
+.rankno{font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--ink-soft)}
+.name{font-family:Jua,sans-serif;font-weight:400;font-size:clamp(34px,9vw,48px);
+  line-height:1.15;margin:10px 0 0;text-align:center;text-wrap:balance}
+.name.gold{color:var(--gold)}
+.fortune{font-size:clamp(17px,4.6vw,21px);line-height:1.55;text-align:center;
+  margin:14px 0 0;max-width:20em;text-wrap:balance;font-weight:500}
+
+.sfs{width:100%;max-width:33em;margin-top:24px;border-top:1px solid var(--rule)}
+.sf{display:grid;grid-template-columns:64px 58px 1fr;gap:6px 12px;align-items:baseline;
+  padding:11px 2px;border-bottom:1px solid var(--rule)}
+.sf .lb{font-family:"IBM Plex Mono",monospace;font-size:15px;font-weight:600;letter-spacing:.04em;color:var(--accent)}
+.sf .dots{white-space:nowrap;line-height:1}
+.pips{display:inline-flex;gap:3.5px;align-items:center}
+.pip{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--accent);opacity:.32}
+.pip.on{background:var(--accent);opacity:1}
+.sw{display:inline-block;width:12px;height:12px;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(0,0,0,.22) inset;vertical-align:-1px;margin-right:6px}
+.sf .tx{font-size:13.5px;line-height:1.6}
+@media (max-width:540px){.sf{grid-template-columns:64px 1fr}.sf .tx{grid-column:1 / -1}}
+
+.lucky{width:100%;max-width:33em;margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.lucky div{padding:14px 8px;text-align:center}
+.lucky div + div{border-left:1px solid var(--rule)}
+.lucky .k{font-family:"IBM Plex Mono",monospace;font-size:16px;font-weight:600;letter-spacing:.06em;color:var(--ink-soft);word-break:keep-all}
+.lucky .v{font-family:Jua,sans-serif;font-size:24px;margin-top:6px;color:var(--accent);
+  line-height:1.35;word-break:keep-all}
+
+.advice{width:100%;max-width:33em;margin-top:20px;padding:0 0 0 14px;
+  border-left:3px solid var(--accent);font-size:19px;line-height:1.65}
+.advice b{display:block;font-family:"IBM Plex Mono",monospace;font-size:15px;letter-spacing:.1em;
+  color:var(--accent);margin-bottom:6px}
+
+.note{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);
+  max-width:33em;width:100%;font-size:15px;color:var(--ink-soft)}
+.note b{display:block;font-family:Jua,sans-serif;font-weight:400;font-size:16px;
+  letter-spacing:0;color:var(--accent);margin-bottom:7px}
+.testbar{margin-top:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
+.testchip{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.06em;
+  color:var(--accent);border:1.5px dashed var(--accent);border-radius:999px;padding:3px 11px;white-space:nowrap}
+.again{appearance:none;cursor:pointer;border:0;border-radius:999px;background:var(--btn);
+  color:var(--btn-ink);font-family:Jua,sans-serif;font-size:16px;padding:7px 22px;transition:opacity .12s ease}
+.again:hover{opacity:.86}
+.again:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+.tally h3{margin:0;font-family:Jua,sans-serif;font-weight:400;font-size:19px;color:var(--accent)}
+.tally .cnt{margin:6px 0 0;font-family:Jua,sans-serif;font-size:20px;line-height:1.4}
+.tbars{display:flex;gap:3px;align-items:flex-end;height:64px;margin-top:14px}
+.tbar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;position:relative}
+.tbar i{display:block;background:var(--bar);border-radius:4px 4px 0 0;min-height:3px}
+.tbar.mine i{background:var(--accent)}
+.tbar.best i{background:var(--gold)}
+.tbar em{position:absolute;top:-2px;left:0;right:0;text-align:center;font-style:normal;
+  font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-soft)}
+.tfoot{display:flex;justify-content:space-between;margin-top:8px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-soft)}
+.tnote{margin:12px 0 0;font-size:13px;color:var(--ink-soft)}
+.tnote b{color:var(--ink);font-weight:600}
+
+.history{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.history h3{margin:0;font-family:Jua,sans-serif;font-weight:400;font-size:17px;color:var(--accent)}
+.hlist{display:flex;gap:12px;flex-wrap:wrap}
+.hitem{display:flex;flex-direction:column;align-items:center;gap:2px;width:46px}
+.hitem .hdish{width:40px;height:40px;border-radius:50%;background:var(--dish);display:grid;place-items:center}
+.hitem svg{width:82%;height:82%}
+.hitem span{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--ink-soft)}
+
+.ledger-sect h3{margin:0 0 14px;font-family:Jua,sans-serif;font-weight:400;font-size:19px;color:var(--accent)}
+.ledger-btn{position:fixed;right:16px;bottom:16px;z-index:40;appearance:none;cursor:pointer;
+  background:var(--btn);border:0;border-radius:999px;padding:11px 20px;color:var(--btn-ink);
+  display:flex;align-items:center;gap:8px;font-family:Jua,sans-serif;font-size:15px;
+  box-shadow:0 3px 12px var(--shadow);transition:opacity .12s ease}
+.ledger-btn:hover{opacity:.86}
+.ledger-btn:active{opacity:.74}
+.ledger-btn .chev{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--btn-ink);opacity:.75}
+.ledger{display:flex;flex-direction:column}
+.entry{padding:18px 0 20px;border-top:1px solid var(--rule);
+  display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start}
+.entry .edish{width:64px;height:64px;border-radius:50%;background:var(--dish);
+  box-shadow:0 0 0 1px var(--dish-rim) inset;display:grid;place-items:center}
+.entry .edish svg{width:84%;height:84%}
+.entry .rk{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--ink-soft)}
+.entry h4{margin:-2px 0 0;font-family:Jua,sans-serif;font-weight:400;font-size:22px;line-height:1.2}
+.entry.first h4{color:var(--gold)}
+.entry .f{font-size:13.5px;margin:5px 0 0;font-weight:500}
+.entry .d{font-size:12.5px;color:var(--ink-soft);margin:6px 0 0;line-height:1.62}
+
+@media (prefers-reduced-motion:reduce){.dish.shaking{animation:none}.pop{animation:none}.lever{transition:none}}
+</style>
+
+<div class="wrap" id="root"></div>
+
+<script>
+(function(){
+  "use strict";
+  var SRC = document.currentScript.textContent;
+  var FONTLINK = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">';
+
+  var STATE = {"d":"","c":{}}; /*STATE_END*/
+
+  /* ---------------- 언어 (KO/EN) ---------------- */
+  var LKEY = "ddong-lang", LANG = "ko";
+  try{ var _sl = localStorage.getItem(LKEY); if(_sl==="en"||_sl==="ko") LANG = _sl; }catch(e){}
+  function setLang(l){ try{ localStorage.setItem(LKEY, l); }catch(e){} location.reload(); }
+
+  var STR = {
+    ko: {
+      title:"오늘의 똥 운세 뽑기", h1:"오늘의 똥",
+      lever:"똥 뽑기", leverAgain:"다시 싸기", opening:"여는 중…",
+      historyTitle:"내 최근 기록", ledgerTitle:"똥 컬렉션", ledgerBtn:"똥 컬렉션 보기",
+      grade:"등급",
+      love:"애정운", money:"금전운", health:"건강운", study:"학업운",
+      luckyColor:"행운의 색", luckyNumber:"행운의 숫자", luckyTime:"행운의 시간",
+      adviceTitle:"오늘의 조언", aboutTitle:"이 똥에 대하여 💩",
+      testChip:"테스트 모드 · 집계 안 됨", testChipHint:"테스트 모드 · 마음껏 뽑아도 집계 안 됨",
+      nextDayBtn:"내일로 넘기기", todayTip:"개발용: 3번 연속 클릭하면 테스트 모드",
+      tallyTitle:"오늘 다 같이 뽑은 결과",
+      tallyCount:function(n){ return "지금까지 "+n+"명이 뽑았어요"; },
+      tallyTop:function(name,n){ return "오늘 제일 많이 나온 건 "+name+" ("+n+"명)"; },
+      tallyMine:" · 내 건 주황색",
+      rankLabel:function(n){ return n+"위"; },
+      dayoffSuffix:function(n){ return " +"+n+"일"; },
+      days:["일","월","화","수","목","금","토"],
+      langBtnLabel:"EN"
+    },
+    en: {
+      title:"Today's Poop Fortune", h1:"Today's Poop",
+      lever:"Draw a Poop", leverAgain:"Poop Again", opening:"Opening…",
+      historyTitle:"Recent Draws", ledgerTitle:"Poop Collection", ledgerBtn:"View Poop Collection",
+      grade:"Grade",
+      love:"Love", money:"Money", health:"Health", study:"Study",
+      luckyColor:"Lucky Color", luckyNumber:"Lucky Number", luckyTime:"Lucky Time",
+      adviceTitle:"Today's Advice", aboutTitle:"About This Poop 💩",
+      testChip:"Test Mode · Not Counted", testChipHint:"Test Mode · Draw freely, nothing is counted",
+      nextDayBtn:"Skip to Tomorrow", todayTip:"Dev: tap 3x fast for test mode",
+      tallyTitle:"Today's Community Results",
+      tallyCount:function(n){ return n+" people have drawn so far"; },
+      tallyTop:function(name,n){ return "Most drawn today: "+name+" ("+n+")"; },
+      tallyMine:" · Yours is the orange one",
+      rankLabel:function(n){ return "#"+n; },
+      dayoffSuffix:function(n){ return " +"+n+"d"; },
+      days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],
+      langBtnLabel:"한국어"
+    }
+  };
+  var T = STR[LANG];
+
+  /* ---------------- 그림: 굵은 선 스티커 (시안 A) ---------------- */
+  var INK="#3A2411", K=3.4, BR="#B5793C", GD="#E8B733",
+      ST="#96897A", WA="#BE8C55", GH="#EADCC0";
+
+  function el(l){ return '<ellipse cx="'+l[0]+'" cy="'+l[1]+'" rx="'+l[2]+'" ry="'+l[3]+'"/>'; }
+  function lobes(a){ return a.map(el).join(''); }
+  function noodle(d,w){ return '<path d="'+d+'" fill="none" stroke-width="'+w+'" stroke-linecap="round"/>'; }
+  function tip(cx,y,w,h){
+    return '<path d="M'+cx+' '+(y-h)+' C '+(cx+w*.8)+' '+(y-h*.45)+' '+(cx+w)+' '+(y-h*.15)+' '+(cx+w)+' '+y+
+           ' L '+(cx-w)+' '+y+' C '+(cx-w)+' '+(y-h*.15)+' '+(cx-w*.8)+' '+(y-h*.45)+' '+cx+' '+(y-h)+' Z"/>';
+  }
+  /* 잉크색으로 K만큼 부풀린 실루엣 위에 본체를 얹어 한 덩어리 윤곽을 만든다 */
+  function ol(shapes, fill){
+    var fat = shapes.replace(/stroke-width="(\d+(?:\.\d+)?)"/g,
+      function(m,w){ return 'stroke-width="'+(+w+K*2)+'"'; });
+    return '<g fill="'+INK+'" stroke="'+INK+'" stroke-width="'+(K*2)+
+           '" stroke-linejoin="round" stroke-linecap="round">'+fat+'</g>'+
+           '<g fill="'+fill+'" stroke="'+fill+'">'+shapes+'</g>';
+  }
+  function face(x,y,o){
+    o=o||{}; var s=o.s||1, c=o.c||INK, ex=7*s, w=2.5*s, out="";
+    var sk=' stroke="'+c+'" stroke-width="'+w+'" fill="none" stroke-linecap="round"';
+    function dot(px){ return '<ellipse cx="'+px+'" cy="'+y+'" rx="'+(2.5*s)+'" ry="'+(3.1*s)+'" fill="'+c+'"/>'; }
+    function arc(px){ return '<path d="M'+(px-4*s)+' '+(y+1*s)+' Q '+px+' '+(y-4.4*s)+' '+(px+4*s)+' '+(y+1*s)+'"'+sk+'/>'; }
+    function ln(px){ return '<path d="M'+(px-3.8*s)+' '+y+' H '+(px+3.8*s)+'"'+sk+'/>'; }
+    function xx(px){ return '<path d="M'+(px-3.2*s)+' '+(y-3.2*s)+' L '+(px+3.2*s)+' '+(y+3.2*s)+
+                     ' M '+(px+3.2*s)+' '+(y-3.2*s)+' L '+(px-3.2*s)+' '+(y+3.2*s)+'"'+sk+'/>'; }
+    if(o.eyes==="happy") out=arc(x-ex)+arc(x+ex);
+    else if(o.eyes==="line") out=ln(x-ex)+ln(x+ex);
+    else if(o.eyes==="x") out=xx(x-ex)+xx(x+ex);
+    else out=dot(x-ex)+dot(x+ex);
+    var my=y+8*s;
+    if(o.mouth==="grin") out+='<path d="M'+(x-6*s)+' '+(my-1*s)+' a '+(6*s)+' '+(6*s)+' 0 0 0 '+(12*s)+' 0 Z" fill="'+c+'"/>';
+    else if(o.mouth==="o") out+='<ellipse cx="'+x+'" cy="'+(my+1*s)+'" rx="'+(2.8*s)+'" ry="'+(3.4*s)+'" fill="'+c+'"/>';
+    else if(o.mouth==="flat") out+='<path d="M'+(x-4.4*s)+' '+my+' H '+(x+4.4*s)+'"'+sk+'/>';
+    else if(o.mouth==="wave") out+='<path d="M'+(x-6*s)+' '+my+' q 3 -3.4 6 0 t 6 0"'+sk+'/>';
+    else if(o.mouth==="frown") out+='<path d="M'+(x-5*s)+' '+(my+3*s)+' Q '+x+' '+(my-2.2*s)+' '+(x+5*s)+' '+(my+3*s)+'"'+sk+'/>';
+    else out+='<path d="M'+(x-5*s)+' '+my+' Q '+x+' '+(my+5.4*s)+' '+(x+5*s)+' '+my+'"'+sk+'/>';
+    return out;
+  }
+  function shine(x,y,r){ return '<ellipse cx="'+x+'" cy="'+y+'" rx="'+r+'" ry="'+(r*.62)+'" fill="#fff" opacity=".45"/>'; }
+  function star(x,y,r,f){
+    var d='M'+x+' '+(y-r)+' Q '+x+' '+y+' '+(x+r)+' '+y+' Q '+x+' '+y+' '+x+' '+(y+r)+
+          ' Q '+x+' '+y+' '+(x-r)+' '+y+' Q '+x+' '+y+' '+x+' '+(y-r)+' Z';
+    return '<path d="'+d+'" fill="'+INK+'" stroke="'+INK+'" stroke-width="'+(K*1.5)+'" stroke-linejoin="round"/>'+
+           '<path d="'+d+'" fill="'+f+'"/>';
+  }
+  function svg(inner){
+    return '<svg viewBox="0 0 100 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">'+inner+'</svg>';
+  }
+
+  /* ---------------- 엉덩이 (뽑기 연출: 씰룩 하고 힘주면 똥이 나옴) ---------------- */
+  function buttSVG(withId){
+    var shadow = '<ellipse cx="50" cy="90" rx="30" ry="4" fill="'+INK+'" opacity=".13"/>';
+    /* 얇은 선 두 개의 루프 — 위가 갈라진 골반쪽, 볼기짝이 아래로 늘어지게 (180도 반전) */
+    var d = '<path d="M50 48 C59 71 83 71 93 50 C103 29 90 12 66 17 '+
+      'M50 48 C41 71 17 71 7 50 C-3 29 10 12 34 17" '+
+      'fill="none" stroke="var(--ink)" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    var wrap = withId ? '<g id="buttBody">' : '<g>';
+    var orb = withId ? '<circle id="popOrb" cx="50" cy="48" r="9" fill="'+BR+'" stroke="var(--ink)" stroke-width="2"/>' : '';
+    return svg(shadow + wrap + d + '</g>' + orb);
+  }
+
+  /* ---------------- 세부운 문장 풀 (등급대별 공용) ---------------- */
+  var TIER = {
+    hi: {
+      love:{ko:["먼저 다가가면 좋은 답이 옵니다.","오래 미룬 말을 꺼내기 좋은 날입니다.","상대가 먼저 연락해 옵니다.",
+            "쌓였던 오해가 풀립니다.","함께 있는 시간이 길어집니다.","표현하는 만큼 그대로 전해집니다.",
+            "새로운 인연이 생길 수 있습니다.","오늘은 다툴 일이 없습니다."],
+           en:["Reach out first and you'll get a good answer.","A good day to finally say what you've been putting off.",
+            "They reach out to you first.","A misunderstanding that's been building finally clears up.",
+            "You end up spending more time together than planned.","Whatever you express comes through exactly as you meant it.",
+            "A new connection could come your way.","No reason to argue today."]},
+      money:{ko:["뜻하지 않은 수입이 있을 수 있습니다.","쓴 만큼 값어치를 합니다.","받을 돈이 제때 들어옵니다.",
+             "지출이 계획 안에서 끝납니다.","조건 좋은 제안이 들어옵니다.","아껴둔 것이 오늘 도움이 됩니다.",
+             "작은 이득이 여러 번 생깁니다.","손해 볼 일이 없습니다."],
+            en:["Unexpected income could come your way.","Whatever you spend, it's worth it.","Money owed to you arrives right on time.",
+             "Spending stays within your plan.","A good offer comes your way.","What you saved up helps you out today.",
+             "Small gains keep coming your way.","Nothing to lose today."]},
+      health:{ko:["컨디션이 최상입니다.","몸이 가볍습니다.","잘 자고 잘 먹는 하루입니다.",
+              "피로가 빨리 풀립니다.","운동하기 좋은 날입니다.","속이 편안합니다.",
+              "아팠던 곳이 나아집니다.","저녁까지 체력이 남습니다."],
+             en:["You're feeling your best.","Your body feels light.","A day of good sleep and good meals.",
+              "Fatigue melts away fast.","A good day for exercise.","Your stomach feels settled.",
+              "Whatever was bothering you starts to heal.","Your energy holds up all the way to evening."]},
+      study:{ko:["외운 것이 그대로 나옵니다.","이해가 빠릅니다.","집중이 오래 갑니다.",
+             "어려운 부분이 오늘 풀립니다.","설명이 귀에 잘 들어옵니다.","오늘 본 건 오래 갑니다.",
+             "궁금했던 게 시험에 나옵니다.","진도가 예상보다 나갑니다."],
+            en:["Everything you memorized shows up exactly as studied.","You catch on fast today.","Your focus lasts a long time.",
+             "The hard part finally clicks today.","Explanations sink in easily.","What you study today sticks for a long time.",
+             "The thing you wondered about shows up on the test.","You get further than expected."]}
+    },
+    mid: {
+      love:{ko:["큰 변화는 없습니다.","먼저 연락하면 답은 옵니다.","사소한 걸로 서운해질 수 있습니다.",
+            "말수를 줄이는 쪽이 낫습니다.","무난하게 지나갑니다.","기대는 조금만 하세요.",
+            "상대의 말을 끝까지 들으세요.","약속 시간을 지키세요."],
+           en:["No big changes today.","Reach out first and you'll get a reply.","A small thing could leave you feeling hurt.",
+            "Better to say less today.","Things pass by uneventfully.","Keep your expectations modest.",
+            "Hear them out all the way.","Don't be late."]},
+      money:{ko:["큰 변동은 없지만 새는 돈도 없습니다.","작은 지출이 반복됩니다.","충동구매를 조심하세요.",
+             "예산을 미리 정해두면 편합니다.","받을 돈이 조금 늦어집니다.","아낀 만큼 그대로 남습니다.",
+             "가격 비교를 한 번 더 하세요.","영수증을 챙겨두세요."],
+            en:["No big shifts, but nothing leaking out either.","Small expenses keep adding up.","Watch out for impulse buys.",
+             "Setting a budget ahead of time makes it easier.","Money owed to you runs a little late.","What you save stays saved.",
+             "Compare prices one more time.","Hold onto your receipts."]},
+      health:{ko:["무난합니다. 무리만 안 하면 됩니다.","잠이 부족할 수 있습니다.","물을 평소보다 더 드세요.",
+              "어깨와 목이 뻐근합니다.","끼니를 거르지 마세요.","가벼운 산책이 도움이 됩니다.",
+              "눈이 피로합니다.","저녁에 컨디션이 떨어집니다."],
+             en:["You're fine, just don't overdo it.","You might be short on sleep.","Drink more water than usual.",
+              "Your shoulders and neck feel stiff.","Don't skip meals.","A light walk will help.",
+              "Your eyes feel tired.","You lose steam by evening."]},
+      study:{ko:["속도는 느리지만 쌓이긴 합니다.","집중이 자꾸 끊깁니다.","복습이 필요합니다.",
+             "짧게 나눠서 하는 쪽이 낫습니다.","대충 넘긴 부분이 걸립니다.","익숙한 것부터 시작하세요.",
+             "노트 정리가 도움이 됩니다.","오늘 한 건 내일 한 번 확인하세요."],
+            en:["Slow going, but it adds up.","Your focus keeps breaking.","You need to review.",
+             "Better to break it into short sessions.","The part you skimmed comes back to bite you.","Start with what's familiar.",
+             "Organizing your notes will help.","Double-check today's work tomorrow."]}
+    },
+    lo: {
+      love:{ko:["말이 헛나갑니다. 오늘은 듣기만 하세요.","연락이 없습니다. 기다리지 마세요.","괜한 오해가 생길 수 있습니다.",
+            "먼저 사과하는 쪽이 편합니다.","기대했던 답이 오지 않습니다.","혼자 있는 편이 나을 수 있습니다.",
+            "오늘은 농담이 안 통합니다.","무리하게 만나려 하지 마세요."],
+           en:["Words come out wrong. Just listen today.","No word from them. Don't wait around.","A needless misunderstanding could crop up.",
+            "It's easier if you apologize first.","The answer you hoped for doesn't come.","You might be better off alone today.",
+            "Jokes don't land today.","Don't force a meetup today."]},
+      money:{ko:["갑작스러운 지출이 있습니다.","손재수를 조심하세요.","들어올 줄 알았던 돈이 안 들어옵니다.",
+             "오늘은 큰돈을 쓰지 마세요.","빌려주면 못 받습니다.","충동구매를 특히 조심하세요.",
+             "잔돈이 계속 새어 나갑니다.","결제는 내일 하세요."],
+            en:["An unexpected expense pops up.","Watch out for bad luck with money.","Money you expected doesn't come in.",
+             "Don't spend big today.","Lend it and you won't see it again.","Be extra careful with impulse buys.",
+             "Small change keeps slipping away.","Save the purchase for tomorrow."]},
+      health:{ko:["몸이 무겁습니다. 일찍 자는 게 답입니다.","찬 것을 피하세요.","속이 더부룩합니다.",
+              "두통이 있을 수 있습니다.","무리하면 며칠 갑니다.","밖에서 아무거나 먹지 마세요.",
+              "허리와 목을 조심하세요.","쉬는 것이 유일한 처방입니다."],
+             en:["Your body feels heavy. Early sleep is the answer.","Avoid cold food and drinks.","Your stomach feels bloated.",
+              "You might get a headache.","Push too hard and it'll linger for days.","Don't eat just anything while out.",
+              "Watch your back and neck.","Rest is the only remedy today."]},
+      study:{ko:["진도가 안 나갑니다.","오래 앉아 있어도 소용없습니다.","오늘 세운 계획은 절반만 된다고 보세요.",
+             "머리에 잘 안 들어옵니다.","준비한 것과 다른 게 나옵니다.","차라리 쉬었다 하는 쪽이 낫습니다.",
+             "실수가 잦습니다. 검토하세요.","내일의 나에게 맡기세요."],
+            en:["You barely make progress.","Sitting there longer doesn't help.","Expect to get through only half of today's plan.",
+             "Nothing quite sinks in.","Something different from what you prepared comes up.","You'd do better taking a break first.",
+             "Mistakes come easily. Double-check your work.","Leave it to tomorrow's you."]}
+    }
+  };
+
+  var COLORS = [
+    {n:{ko:"빨강",en:"Red"},h:"#DC3A2E"},     {n:{ko:"주황",en:"Orange"},h:"#F07C1E"},
+    {n:{ko:"노랑",en:"Yellow"},h:"#F2C10E"},  {n:{ko:"연두",en:"Light Green"},h:"#8CC152"},
+    {n:{ko:"초록",en:"Green"},h:"#2E9E5B"},   {n:{ko:"민트",en:"Mint"},h:"#3EC1A6"},
+    {n:{ko:"하늘색",en:"Sky Blue"},h:"#4FB0E8"},{n:{ko:"파랑",en:"Blue"},h:"#2E6FD6"},
+    {n:{ko:"남색",en:"Navy"},h:"#2B3E78"},    {n:{ko:"보라",en:"Purple"},h:"#7E4FC4"},
+    {n:{ko:"분홍",en:"Pink"},h:"#EE6FA0"},    {n:{ko:"베이지",en:"Beige"},h:"#DCC7A2"},
+    {n:{ko:"갈색",en:"Brown"},h:"#8A5A2B"},   {n:{ko:"회색",en:"Gray"},h:"#8C8C8C"},
+    {n:{ko:"검정",en:"Black"},h:"#2B2B2B"},   {n:{ko:"흰색",en:"White"},h:"#F7F3E8"}
+  ];
+  var TIMES = {
+    ko:["07–09시","09–11시","11–13시","13–15시","15–17시","17–19시","19–21시","21–23시"],
+    en:["7–9 AM","9–11 AM","11 AM–1 PM","1–3 PM","3–5 PM","5–7 PM","7–9 PM","9–11 PM"]
+  };
+
+  /* ---------------- 16종 ---------------- */
+  var DDONG = [
+    { id:"gold", name:{ko:"황금똥",en:"Golden Poop"}, grade:"S+", tier:"hi", s:{love:5,money:5,health:5,study:5},
+      fort:{ko:["오늘은 뭘 해도 되는 날입니다.","막혔던 일이 한 번에 뚫립니다.","오늘 하는 선택은 대부분 정답입니다.",
+        "기다리던 소식이 오늘 옵니다.","주변에서 먼저 도와주려 합니다.","운이 좋아서가 아니라 그냥 다 됩니다.",
+        "오늘 만난 사람이 나중에 도움이 됩니다.","포기했던 일에서 연락이 옵니다.",
+        "하는 일마다 예상보다 잘 풀립니다.","오늘만큼은 자신 있게 나서도 됩니다."],
+        en:["Today, anything you do turns out right.","Whatever's been stuck breaks free all at once.",
+        "Most choices you make today are the right ones.","The news you've been waiting for arrives today.",
+        "People around you offer to help before you even ask.","It's not luck — things just work out.",
+        "Someone you meet today will help you later on.","Word comes in about something you'd given up on.",
+        "Everything turns out better than expected.","Today, it's safe to step up with confidence."]},
+      adv:{ko:["미뤄둔 일을 오늘 하세요. 이런 날은 자주 안 옵니다.","겸손할 필요 없습니다. 오늘은 나서세요.",
+        "먼저 연락하세요. 받아줄 겁니다.","고민하던 결정, 오늘 내리세요.","좋은 일은 나눠야 오래 갑니다.",
+        "운이 좋을 때일수록 기본을 지키세요.","오늘 산 물건은 오래 씁니다.","거절당할까 봐 안 하던 걸 해보세요.",
+        "잘 풀린다고 방심하면 내일이 아쉽습니다.","오늘 찍은 사진은 남겨두세요."],
+        en:["Handle what you've been putting off — days like this don't come often.","No need for modesty. Take the lead today.",
+        "Reach out first — they'll say yes.","Make that decision you've been agonizing over, today.","Good things last longer when you share them.",
+        "The luckier the day, the more the basics matter.","Whatever you buy today will last.","Try the thing you've been avoiding out of fear of rejection.",
+        "Get careless because things are going well, and tomorrow pays for it.","Keep the photo you take today."]},
+      desc:{ko:"광택·무게·향 세 항목 모두 만점. 물에 뜨고, 물을 내려도 잠깐 버틴다. 지금까지 딱 3번 나왔는데 목격자 전원이 그날 좋은 일이 있었다고 했다.",
+            en:"Perfect scores across shine, weight, and scent. It floats, and holds its ground for a moment even after you flush. It's appeared exactly three times so far, and every witness reported something good happening that day."},
+      art:"" },
+
+    { id:"banana", name:{ko:"바나나똥",en:"Banana Poop"}, grade:"A+", tier:"hi", s:{love:4,money:3,health:5,study:4},
+      fort:{ko:["막힘 없이 흘러가는 하루입니다.","계획한 대로 그대로 갑니다.","무리하지 않아도 알아서 풀립니다.",
+        "시작한 일이 끝까지 이어집니다.","속도가 딱 알맞은 하루입니다.","어제 한 준비가 오늘 빛을 봅니다.",
+        "걱정했던 일이 생각보다 쉽게 끝납니다.","누구와 붙어도 부딪히지 않습니다.",
+        "몸도 마음도 가벼운 날입니다.","평소 하던 대로만 하면 됩니다."],
+        en:["A day that flows without a single snag.","Everything goes exactly as planned.","Things resolve themselves without you pushing.",
+        "Whatever you start, you carry through to the end.","The pace of the day is just right.","Yesterday's prep pays off today.",
+        "The thing you worried about wraps up easier than expected.","You get along with everyone today, no friction.",
+        "A day when body and mind both feel light.","Just do what you always do — that's enough."]},
+      adv:{ko:["굳이 손대지 마세요. 지금 흐름이 제일 좋습니다.","속도를 올리려 하지 마세요. 지금이 딱 좋습니다.",
+        "오래 미룬 말을 오늘 꺼내보세요.","새로운 걸 시작하기 좋은 날입니다.","잘 되고 있을 때 기록해두세요.",
+        "남의 속도에 맞추지 마세요.","오늘의 컨디션을 기억해두세요. 기준이 됩니다.","작은 습관 하나를 오늘부터 시작하세요.",
+        "칭찬을 들으면 그냥 받으세요.","무난한 게 나쁜 게 아닙니다."],
+        en:["Don't fix what isn't broken — the current flow is the best it'll get.","Don't try to speed up. The current pace is just right.",
+        "Bring up that thing you've been putting off saying.","A good day to start something new.","Write it down while things are going well.",
+        "Don't match someone else's pace.","Remember how you feel today — it'll become your benchmark.","Start one small habit today.",
+        "If someone compliments you, just accept it.","Uneventful isn't the same as bad."]},
+      desc:{ko:"끊김 없이 한 번에 나온 길고 매끈한 형태. 굵기가 처음부터 끝까지 똑같다. 교과서에 실리는 가장 이상적인 똥이고, 이게 나오면 몸 상태가 좋다는 뜻이다.",
+            en:"Long, smooth, and formed in one unbroken piece. The thickness stays exactly the same from end to end. It's the textbook-ideal poop, and if it shows up, it means your body is in great shape."},
+      art:"" },
+
+    { id:"king", name:{ko:"대왕똥",en:"King-Size Poop"}, grade:"A", tier:"hi", s:{love:4,money:4,health:3,study:4},
+      fort:{ko:["크게 벌어지는 일이 있습니다.","오늘 하는 일은 규모가 큽니다.","한 번에 많은 것이 정리됩니다.",
+        "존재감을 드러내게 되는 날입니다.","큰 결정을 내려야 할 수 있습니다.","쌓아둔 것이 한꺼번에 나옵니다.",
+        "주목받는 자리에 서게 됩니다.","생각보다 판이 커집니다.",
+        "밀린 일을 몰아서 끝내게 됩니다.","오늘 쓴 힘만큼 결과가 나옵니다."],
+        en:["Something big is about to unfold.","Whatever you take on today, it's big in scale.","A lot gets sorted out at once.",
+        "A day you end up standing out.","You might have to make a big decision.","Everything you've been holding back comes out at once.",
+        "You end up in the spotlight.","Things get bigger than you expected.",
+        "You knock out a backlog all in one go.","You get out exactly as much as you put in today."]},
+      adv:{ko:["한 번에 다 하려 하지 말고 두 번에 나누세요.","체력 배분을 하세요. 저녁에 무너집니다.",
+        "큰 결정일수록 하루만 더 생각하세요.","혼자 감당하지 말고 도움을 요청하세요.","시작했으면 오늘 안에 끝내세요.",
+        "뒷정리까지가 일입니다.","목소리를 조금만 낮추세요.","욕심을 조금 줄이면 훨씬 수월합니다.",
+        "끝나고 나면 꼭 쉬세요.","크게 벌인 만큼 티가 납니다. 각오하세요."],
+        en:["Don't try to do it all at once — split it in two.","Pace yourself — you'll crash by evening otherwise.",
+        "The bigger the decision, the more it deserves one more day of thought.","Don't shoulder it alone — ask for help.","If you started it, finish it today.",
+        "The job isn't done until the cleanup is.","Dial your voice down a notch.","Ease up on ambition and it goes a lot smoother.",
+        "Make sure to rest once it's done.","Go big and it'll show. Brace yourself."]},
+      desc:{ko:"변기 지름 절반을 차지하는 초대형. 한 번에 안 내려가서 물을 두 번 내려야 한다. 나오고 나면 다리에 힘이 풀린다는 증언이 많다.",
+            en:"A giant that takes up half the width of the toilet bowl. It won't go down in one flush — you'll need two. Many report their legs go weak afterward."},
+      art:"" },
+
+    { id:"rainbow", name:{ko:"무지개똥",en:"Rainbow Poop"}, grade:"A-", tier:"hi", s:{love:4,money:2,health:3,study:3},
+      fort:{ko:["예상 못 한 곳에서 즐거운 일이 옵니다.","계획대로 되는 게 없는데 결과는 좋습니다.","낯선 것에서 기회가 옵니다.",
+        "어제와 완전히 다른 하루가 됩니다.","우연이 겹쳐서 좋은 쪽으로 갑니다.","평소 안 하던 걸 하게 됩니다.",
+        "뜻밖의 사람에게 연락이 옵니다.","재미있는 일이 갑자기 생깁니다.",
+        "오늘의 실수가 나중에 도움이 됩니다.","예측이 다 빗나가지만 나쁘지 않습니다."],
+        en:["Something fun comes from a place you never expected.","Nothing goes as planned, yet everything turns out fine.","Opportunity comes from something unfamiliar.",
+        "Today looks nothing like yesterday.","A string of coincidences works out in your favor.","You end up doing something you never normally would.",
+        "You hear from someone you didn't expect.","Something fun suddenly happens.",
+        "Today's mistake ends up helping you later.","Every prediction misses, but it's not a bad thing."]},
+      adv:{ko:["오늘은 계획을 조금 어겨도 괜찮습니다.","안 가본 길로 가보세요.","권하는 걸 일단 받아들이세요.",
+        "어제와 다른 걸 하나만 해보세요.","우연을 그냥 흘려보내지 마세요.","낯선 사람의 말을 한 번 들어보세요.",
+        "정리하려 하지 말고 그냥 두세요.","사진으로 남겨두면 좋은 날입니다.",
+        "규칙보다 기분을 따라가도 됩니다.","설명하려 하지 마세요. 설명이 안 됩니다."],
+        en:["It's fine to stray from the plan a little today.","Take the route you've never taken.","Say yes to whatever's offered, for once.",
+        "Do just one thing differently from yesterday.","Don't let coincidence slip by unnoticed.","Hear out something a stranger says.",
+        "Don't try to tidy it up — just let it be.","A good day to take a photo and keep it.",
+        "It's okay to follow your mood over the rules today.","Don't try to explain it. It won't make sense anyway."]},
+      desc:{ko:"색소 강한 걸 먹은 다음 날에만 가끔 나온다. 층마다 색이 달라서 어제 뭘 먹었는지 역추적이 가능하다. 예쁘지만 본인은 대체로 당황한다.",
+            en:"Only shows up the day after eating something heavily dyed. Each layer is a different color, so you can trace back exactly what you ate yesterday. Pretty to look at, though the owner is usually just confused."},
+      art:"" },
+
+    { id:"thick", name:{ko:"굵은똥",en:"Thick Poop"}, grade:"B+", tier:"mid", s:{love:3,money:3,health:4,study:3},
+      fort:{ko:["든든하게 버티는 하루입니다.","흔들릴 일이 있어도 넘어지지 않습니다.","무게감 있게 하루가 흘러갑니다.",
+        "기본기가 통하는 날입니다.","느리지만 확실하게 나아갑니다.","체력이 받쳐주는 하루입니다.",
+        "믿고 맡길 만한 사람으로 보입니다.","한자리에 오래 앉아 있기 좋은 날입니다.",
+        "어제 잘 잔 것이 오늘 티가 납니다.","묵직한 일 하나를 끝냅니다."],
+        en:["A day you hold steady and strong.","Even if something shakes you, you won't fall.","The day carries a solid, grounded weight.",
+        "A day when the basics carry you through.","Slow, but you move forward for sure.","Your stamina has your back today.",
+        "You come across as someone people can rely on.","A good day to sit and stay put for a long stretch.",
+        "Last night's good sleep shows today.","You finish one substantial task."]},
+      adv:{ko:["화려한 걸 노리지 말고 기본을 하세요.","오늘은 버티는 게 이기는 겁니다.","밥 든든히 먹고 시작하세요.",
+        "남이 급해도 내 속도를 지키세요.","무거운 일을 오늘 잡으세요.","자리를 지키는 것만으로 충분한 날입니다.",
+        "잘 자는 게 내일 운을 만듭니다.","말수를 줄이면 더 믿음직해 보입니다.",
+        "부탁을 받으면 들어줘도 손해 없습니다.","허리 조심하세요."],
+        en:["Skip the flashy stuff — stick to basics.","Today, holding on is winning.","Start with a solid meal in you.",
+        "Keep your own pace, even if others rush.","Tackle the heavy task today.","Just holding your position is enough today.",
+        "Sleeping well tonight builds tomorrow's luck.","Say less, and you'll seem more dependable.",
+        "If someone asks a favor, granting it won't cost you.","Watch your back."]},
+      desc:{ko:"길이는 짧은데 지름이 크다. 밀도가 높아서 묵직하게 가라앉는다. 전날 잘 먹고 잘 잔 사람한테서 주로 나온다.",
+            en:"Short in length but big around. Dense enough to sink straight down with real weight. Usually shows up in people who ate and slept well the night before."},
+      art:"" },
+
+    { id:"soft", name:{ko:"소프트아이스크림똥",en:"Soft-Serve Poop"}, grade:"B", tier:"mid", s:{love:3,money:3,health:4,study:3},
+      fort:{ko:["뭐든 부드럽게 넘어가는 하루입니다.","부딪힐 뻔한 일이 조용히 지나갑니다.","차곡차곡 쌓이는 하루입니다.",
+        "서두르지 않아서 잘 되는 날입니다.","말 한마디로 분위기가 풀립니다.","천천히 가도 늦지 않습니다.",
+        "정리정돈이 잘 되는 날입니다.","감정 소모 없이 하루가 갑니다.",
+        "공들인 만큼 모양이 나옵니다.","오늘은 과정이 결과보다 낫습니다."],
+        en:["A day when everything goes down smoothly.","A near-collision quietly resolves itself.","Things build up neatly, layer by layer.",
+        "Not rushing is exactly why things work out today.","One well-chosen word eases the whole mood.","Going slow won't make you late.",
+        "A day things fall neatly into order.","The day passes without draining you emotionally.",
+        "The effort you put in shows in the result.","Today, the process beats the outcome."]},
+      adv:{ko:["서두르면 무너집니다. 천천히 쌓으세요.","한 번에 끝내려 하지 마세요.","부드럽게 말하면 다 통합니다.",
+        "화가 나면 한 박자 쉬세요.","정리부터 하고 시작하세요.","오늘은 양보하는 쪽이 이깁니다.",
+        "순서를 지키면 훨씬 빠릅니다.","잘 쌓은 건 무너뜨리지 마세요.",
+        "느린 걸 답답해하지 마세요.","따뜻한 걸 드세요."],
+        en:["Rush it and it collapses. Build it slowly.","Don't try to finish it all in one go.","Say it gently and it'll land.",
+        "If you get angry, take a beat first.","Tidy up before you start.","Today, the one who yields wins.",
+        "Following the order gets you there faster.","Don't knock down what you've carefully built.",
+        "Don't let the slow pace frustrate you.","Eat something warm."]},
+      desc:{ko:"다섯 겹 넘게 정교하게 똬리를 튼 형태. 위로 갈수록 좁아지는 비율이 신기할 만큼 일정하다. 천천히 나올수록 층이 예쁘게 쌓인다.",
+            en:"Coiled into more than five precise layers. The way it narrows toward the top is uncannily consistent. The slower it comes out, the more beautifully the layers stack."},
+      art:"" },
+
+    { id:"twin", name:{ko:"쌍둥이똥",en:"Twin Poop"}, grade:"B-", tier:"mid", s:{love:4,money:3,health:3,study:3},
+      fort:{ko:["좋은 일이 두 번 겹쳐서 옵니다.","혼자보다 둘이 나은 하루입니다.","같은 일이 두 번 반복됩니다.",
+        "두 가지 중에 골라야 합니다.","짝이 맞아떨어지는 날입니다.","비슷한 사람을 만나게 됩니다.",
+        "하나를 하면 하나가 따라옵니다.","두 번째 기회가 옵니다.",
+        "누군가와 손발이 잘 맞습니다.","오늘은 뭐든 짝수로 옵니다."],
+        en:["Something good happens — twice.","A day when two is better than one.","The same thing happens twice.",
+        "You'll have to choose between two things.","A day when things pair up perfectly.","You meet someone a lot like you.",
+        "Do one thing, and another follows.","A second chance comes your way.",
+        "You click perfectly with someone today.","Everything comes in pairs today."]},
+      adv:{ko:["혼자 하지 말고 같이 하세요.","선택을 미루면 둘 다 놓칩니다.","같은 실수를 두 번 하지 마세요.",
+        "두 번째 제안이 더 좋습니다.","친구에게 먼저 연락해보세요.","확인은 두 번 하세요.",
+        "한쪽만 챙기면 서운해집니다.","비교하지 말고 둘 다 해보세요.",
+        "짝을 지어두면 안 잃어버립니다.","같이 먹으면 더 맛있습니다."],
+        en:["Don't do it alone — do it together.","Delay the choice and you lose both options.","Don't make the same mistake twice.",
+        "The second offer is the better one.","Reach out to a friend first.","Double-check — literally, twice.",
+        "Favor only one side and someone gets hurt.","Don't compare — just try both.",
+        "Pair things up and you won't lose them.","It tastes better shared."]},
+      desc:{ko:"거의 같은 크기 두 개가 나란히 나온다. 어느 쪽이 먼저인지는 알 수 없다. 혼자 있기 싫어하는 성질이 있는 걸로 추정된다.",
+            en:"Two nearly identical pieces come out side by side. No way to tell which one came first. Believed to have some kind of aversion to being alone."},
+      art:"" },
+
+    { id:"corn", name:{ko:"옥수수똥",en:"Corn Poop"}, grade:"C+", tier:"mid", s:{love:2,money:3,health:3,study:2},
+      fort:{ko:["어제 한 일이 오늘 그대로 드러납니다.","숨긴 게 티가 나는 하루입니다.","과거의 선택이 오늘 결과로 옵니다.",
+        "정직한 게 제일 편한 날입니다.","대충 넘긴 부분이 걸립니다.","누군가 내 흔적을 알아챕니다.",
+        "먹은 대로, 한 대로 나옵니다.","기록이 증거가 되는 날입니다.",
+        "오늘은 포장이 안 통합니다.","묻어두려던 게 올라옵니다."],
+        en:["What you did yesterday shows up plainly today.","Whatever you're hiding, it shows today.","A past choice comes back as today's result.",
+        "Honesty is the easiest path today.","The part you skimmed comes back to trip you up.","Someone notices the trail you left.",
+        "You get out exactly what you put in.","Records become evidence today.",
+        "Spin doesn't work today.","Something you tried to bury resurfaces."]},
+      adv:{ko:["숨기려 할수록 더 잘 보입니다.","차라리 먼저 말하는 게 낫습니다.","지난 기록을 한 번 확인해보세요.",
+        "대충 넘긴 부분을 오늘 메우세요.","거짓말은 오늘 특히 안 통합니다.","티 안 나게 하려다 더 티 납니다.",
+        "먹은 걸 기억해두세요.","미리 사과하면 반은 해결됩니다.",
+        "증거를 남기는 습관을 들이세요.","부끄러운 건 어차피 지나갑니다."],
+        en:["The harder you hide it, the more visible it gets.","You're better off saying it first.","Go back and check the record.",
+        "Patch up the part you skimmed, today.","Lies especially don't hold up today.","Try to hide it and it shows even more.",
+        "Remember what you ate.","Apologize early and you're halfway there.",
+        "Get in the habit of keeping records.","The embarrassment passes eventually anyway."]},
+      desc:{ko:"안 소화된 옥수수 알갱이가 표면에 그대로 박혀 있다. 껍질이 위산에 안 녹아서 모양을 유지한 채 통과한 것. 뭘 먹었는지 숨길 수가 없다.",
+            en:"Undigested corn kernels sit right there on the surface. The hull doesn't dissolve in stomach acid, so it passes through fully intact. There's no hiding what you ate."},
+      art:"" },
+
+    { id:"rabbit", name:{ko:"토끼똥",en:"Rabbit Poop"}, grade:"C", tier:"mid", s:{love:2,money:2,health:2,study:2},
+      fort:{ko:["작은 일들이 여러 개 생깁니다.","할 일이 자꾸 늘어나는 하루입니다.","큰 일은 없는데 계속 바쁩니다.",
+        "집중이 자꾸 끊깁니다.","여기저기서 조금씩 부릅니다.","사소한 걸로 신경 쓰이는 날입니다.",
+        "챙길 게 많은 하루입니다.","하나 끝내면 하나 더 생깁니다.",
+        "물 마시는 걸 잊기 쉬운 날입니다.","잔일에 시간이 다 갑니다."],
+        en:["A bunch of small things pop up.","Your to-do list keeps growing today.","Nothing major, but you're busy nonstop.",
+        "Your focus keeps getting broken up.","You get pulled in a little from every direction.","Small things keep nagging at you today.",
+        "A day with a lot of little things to keep track of.","Finish one thing and another appears.",
+        "An easy day to forget to drink water.","Small chores eat up your whole day."]},
+      adv:{ko:["한 번에 하나씩. 욕심내면 다 흩어집니다.","물을 평소보다 많이 드세요.","할 일을 적어놓고 시작하세요.",
+        "작은 것부터 하나씩 지우세요.","다 하려 하지 말고 세 개만 고르세요.","알림을 잠깐 꺼두세요.",
+        "짧게 여러 번 쉬는 게 낫습니다.","사소한 걸로 화내지 마세요.",
+        "챙길 게 많을수록 메모하세요.","저녁엔 아무것도 하지 마세요."],
+        en:["One thing at a time — try for it all and it scatters.","Drink more water than usual.","Write your to-do list down before you start.",
+        "Cross things off starting with the smallest.","Don't try to do it all — pick just three.","Turn off notifications for a while.",
+        "Short, frequent breaks work better today.","Don't let small things set you off.",
+        "The more there is to track, the more you should write down.","Do nothing at all this evening."]},
+      desc:{ko:"동글동글한 알갱이 여러 개로 흩어져 나온다. 수분이 부족할 때 나오는 대표적인 형태라, 물 좀 마시라는 신호다. 귀엽지만 좋은 소식은 아니다.",
+            en:"Comes out scattered into small round pellets. This is the classic sign of not drinking enough water — consider it a signal. Cute, but not exactly good news."},
+      art:"" },
+
+    { id:"slide", name:{ko:"미끄럼틀똥",en:"Slide Poop"}, grade:"C-", tier:"mid", s:{love:2,money:2,health:3,study:2},
+      fort:{ko:["일은 술술 풀리는데 뒷정리가 남습니다.","빠르게 지나가지만 흔적이 남습니다.","쉽게 끝나는 대신 마무리가 아쉽습니다.",
+        "속도는 좋은데 방향이 애매합니다.","생각보다 빨리 도착합니다.","지나온 길이 다 보이는 날입니다.",
+        "실수가 눈에 띄게 남습니다.","한 번에 미끄러지듯 진행됩니다.",
+        "결과는 좋은데 과정이 지저분합니다.","정리할 게 뒤에 쌓입니다."],
+        en:["Things go smoothly, but the cleanup is left for later.","It goes by fast, but leaves a trace.","It ends easily, but the finish leaves something to be desired.",
+        "Good speed, unclear direction.","You get there faster than expected.","A day where the path you took is plain to see.",
+        "Mistakes leave a visible mark.","It all slides through in one smooth motion.",
+        "Good result, messy process.","Cleanup piles up behind you."]},
+      adv:{ko:["끝났다고 놓지 말고 마무리까지 하세요.","속도보다 방향을 먼저 확인하세요.","지나온 자리를 한 번 돌아보세요.",
+        "흔적이 남는 일은 조심하세요.","빨리 끝났으면 그 시간에 정리하세요.","메시지는 보내기 전에 다시 읽으세요.",
+        "쉽게 된 건 한 번 더 확인하세요.","뒷사람 생각도 하세요.",
+        "미끄러운 곳을 조심하세요.","지운다고 다 지워지지 않습니다."],
+        en:["Don't drop it just because it's 'done' — see the finish through.","Check your direction before your speed.","Look back at the path you left behind.",
+        "Be careful with anything that leaves a trace.","If you finish early, use the time to clean up.","Re-read the message before you send it.",
+        "Double-check anything that came easy.","Think of whoever comes after you.",
+        "Watch your step on slippery ground.","Deleting it doesn't erase it completely."]},
+      desc:{ko:"변기 벽면을 타고 미끄러져 내려오면서 지나온 길을 그대로 남긴다. 본체는 무사히 도착하지만 흔적이 남는다. 물 한 번으로는 안 지워진다.",
+            en:"Slides down the wall of the bowl, leaving its path behind in full. The main body arrives just fine — but the trail stays. One flush won't clear it."},
+      art:"" },
+
+    { id:"sweet", name:{ko:"고구마똥",en:"Sweet Potato Poop"}, grade:"D+", tier:"lo", s:{love:2,money:2,health:2,study:2},
+      fort:{ko:["답답한 일이 있지만 결국 해결됩니다.","진도가 안 나가다가 막판에 풀립니다.","속 터지는 일이 하나 있습니다.",
+        "오래 걸리지만 되긴 됩니다.","말이 안 통하는 사람을 만납니다.","기다림이 필요한 하루입니다.",
+        "중간에 포기하고 싶어집니다.","끝내고 나면 개운합니다.",
+        "생각보다 시간이 오래 걸립니다.","버티면 오늘 안에 끝납니다."],
+        en:["Something frustrating comes up, but it works out eventually.","Progress stalls, then breaks loose at the last minute.","One thing today will test your patience.",
+        "It takes a while, but it does get done.","You run into someone you just can't get through to.","A day that calls for patience.",
+        "You'll want to quit halfway through.","It feels great once it's finally over.",
+        "It takes longer than you'd expect.","Stick with it and it'll be done by end of day."]},
+      adv:{ko:["포기하지 마세요. 곧 끝납니다.","물을 한 잔 마시고 다시 하세요.","답답할 땐 잠깐 나갔다 오세요.",
+        "화내도 빨라지지 않습니다.","시간이 걸리는 걸 인정하세요.","설득하려 하지 말고 기다리세요.",
+        "중간에 멈추면 처음부터 다시입니다.","끝나면 꼭 스스로 칭찬하세요.",
+        "혼자 끙끙대지 말고 물어보세요.","오늘은 마감을 넉넉히 잡으세요."],
+        en:["Don't give up. It's almost over.","Drink a glass of water and get back to it.","When it gets frustrating, step out for a minute.",
+        "Getting angry won't speed it up.","Accept that it's going to take time.","Don't try to convince them — just wait.",
+        "Stop halfway and you're starting over.","Be sure to congratulate yourself when it's done.",
+        "Don't struggle alone — ask for help.","Give yourself extra time on any deadline today."]},
+      desc:{ko:"양 끝이 뾰족하고 가운데가 두꺼운 방추형. 나오기까지 평균 8분 걸리고 그동안 얼굴이 빨개진다. 나오고 나면 이상하게 개운하다는 후기가 많다.",
+            en:"Spindle-shaped — pointed at both ends, thick in the middle. Takes 8 minutes on average, during which your face turns red. Oddly, most people report feeling great once it's over."},
+      art:"" },
+
+    { id:"stone", name:{ko:"돌똥",en:"Rock Poop"}, grade:"D", tier:"lo", s:{love:1,money:2,health:1,study:2},
+      fort:{ko:["오늘은 쉽지 않습니다. 힘을 좀 줘야 합니다.","딱딱한 사람을 만나게 됩니다.","쌓아둔 게 굳어서 문제가 됩니다.",
+        "말이 잘 안 나오는 하루입니다.","융통성이 안 통하는 날입니다.","미뤄둔 일이 무겁게 다가옵니다.",
+        "몸이 뻣뻣하게 느껴집니다.","고집을 부리게 되는 날입니다.",
+        "부딪히는 일이 한 번 있습니다.","쉬어야 할 때 못 쉰 것이 옵니다."],
+        en:["Today's not easy. You'll have to push.","You run into someone stubborn.","Something you let pile up has hardened into a problem.",
+        "The words just won't come out today.","Flexibility gets you nowhere today.","Something you postponed weighs heavily now.",
+        "Your body feels stiff.","A day you end up being stubborn.",
+        "You'll butt heads with something once today.","Not resting when you should have finally catches up."]},
+      adv:{ko:["미루지 말고 오늘 조금이라도 하세요.","물을 많이 드세요. 진심입니다.","고집을 한 번만 접어보세요.",
+        "몸을 좀 움직이세요.","정면으로 부딪히지 마세요.","말을 세게 하면 오래 남습니다.",
+        "쌓인 걸 하나만 치우세요.","안 되면 내일 다시 하세요.",
+        "따뜻한 물로 씻으세요.","굳은 건 결국 시간이 풀어줍니다."],
+        en:["Don't put it off — do at least a little today.","Drink a lot of water. Seriously.","Try letting go of your stubbornness, just this once.",
+        "Get your body moving.","Don't meet it head-on.","Harsh words stick around a long time.",
+        "Clear out just one thing that's piled up.","If it's not working, try again tomorrow.",
+        "Wash up with warm water.","Whatever's hardened, time eventually softens it."]},
+      desc:{ko:"모서리가 각지고 표면이 건조하게 갈라져 있다. 딱딱해서 물에 넣어도 모양이 오래 유지된다. 며칠 쌓여 있던 게 굳어서 나온 결과다.",
+            en:"Sharp-edged, with a dry, cracked surface. Hard enough that it keeps its shape in water for a long time. The result of several days' backlog finally hardening."},
+      art:"" },
+
+    { id:"water", name:{ko:"물똥",en:"Watery Poop"}, grade:"D-", tier:"lo", s:{love:1,money:1,health:1,study:2},
+      fort:{ko:["계획이 갑자기 흘러내릴 수 있습니다.","예고 없이 일정이 바뀝니다.","붙잡아둔 것이 새어 나갑니다.",
+        "감정이 쏟아질 수 있는 날입니다.","급하게 움직일 일이 생깁니다.","말이 헛나가기 쉬운 하루입니다.",
+        "준비한 것이 무너집니다.","속도가 통제되지 않습니다.",
+        "예상보다 빨리 끝나버립니다.","오늘은 형태가 안 잡힙니다."],
+        en:["Your plans could suddenly slip out of your hands.","Your schedule changes without warning.","Something you were holding onto leaks out.",
+        "A day your emotions could spill over.","Something forces you to move in a hurry.","Easy to say the wrong thing today.",
+        "What you prepared falls apart.","Things move too fast to control.",
+        "It ends faster than you expected.","Nothing quite holds its shape today."]},
+      adv:{ko:["중요한 약속은 내일로 미루는 게 좋습니다.","찬 것을 피하고 배를 따뜻하게 하세요.","오늘은 듣기만 하세요.",
+        "계획은 절반만 잡으세요.","화장실 위치를 미리 확인해두세요.","급할수록 천천히 말하세요.",
+        "지갑을 조심하세요.","밖에서 아무거나 먹지 마세요.",
+        "무너져도 다시 담으면 됩니다.","오늘은 집이 제일 안전합니다."],
+        en:["Better to push important plans to tomorrow.","Avoid cold food and keep your stomach warm.","Just listen today.",
+        "Only plan for half of what you normally would.","Scope out the nearest restroom ahead of time.","The more urgent it feels, the slower you should speak.",
+        "Keep an eye on your wallet.","Don't eat just anything while out.",
+        "Even if it falls apart, you can put it back together.","Home is the safest place today."]},
+      desc:{ko:"형태를 못 잡고 넓게 퍼진다. 나오는 시간은 아주 짧지만 예고 없이 찾아온다. 이게 나온 날엔 중요한 약속을 잡지 않는 게 좋다.",
+            en:"Spreads out wide, unable to hold any shape. It's over in seconds, but arrives without warning. Best not to schedule anything important on a day this shows up."},
+      art:"" },
+
+    { id:"fart", name:{ko:"방구똥",en:"Fart Poop"}, grade:"E+", tier:"lo", s:{love:1,money:1,health:2,study:1},
+      fort:{ko:["기대한 만큼은 안 나올 수 있습니다.","소문만 요란하고 알맹이가 없습니다.","준비한 것과 다른 게 나옵니다.",
+        "허탈해지는 일이 하나 있습니다.","말만 앞서게 되는 날입니다.","기다린 소식이 오지 않습니다.",
+        "티는 나는데 실속이 없습니다.","김이 새는 하루입니다.",
+        "괜히 나섰다 싶어집니다.","결과보다 과정이 시끄럽습니다."],
+        en:["It might not amount to as much as you expected.","All noise, no substance.","What actually happens isn't what you prepared for.",
+        "Something today will leave you deflated.","A day your words outrun your actions.","The news you waited for never comes.",
+        "Looks like something, amounts to nothing.","A day that fizzles out.",
+        "You'll wonder why you bothered stepping up.","The process makes more noise than the result deserves."]},
+      adv:{ko:["소문내지 마세요. 구설수에 오를 수 있습니다.","기대를 조금만 낮추세요.","말보다 결과로 보여주세요.",
+        "미리 자랑하지 마세요.","안 되면 조용히 넘어가세요.","오늘은 나서지 않는 게 낫습니다.",
+        "실속을 챙기세요.","빈손이어도 괜찮습니다.",
+        "속이 더부룩하면 천천히 드세요.","다음이 있습니다."],
+        en:["Don't go announcing it — you could end up the topic of gossip.","Lower your expectations, just a bit.","Show it in results, not words.",
+        "Don't brag about it in advance.","If it doesn't work out, let it go quietly.","Better not to step forward today.",
+        "Focus on substance, not show.","It's fine to come away empty-handed.",
+        "If your stomach feels off, eat slowly.","There's always a next time."]},
+      desc:{ko:"전조 증상은 완벽했는데 실제로 나온 양은 0에 가깝다. 소리랑 냄새만 남기고 본체는 관측되지 않는다. 대체로 허탈함을 호소한다.",
+            en:"All the warning signs were perfect, but almost nothing actually came out. It leaves behind only sound and smell — the main event is never observed. Most report feeling let down."},
+      art:"" },
+
+    { id:"ghost", name:{ko:"유령똥",en:"Ghost Poop"}, grade:"E", tier:"lo", s:{love:1,money:2,health:2,study:2},
+      fort:{ko:["존재감 없이 조용히 지나가는 하루입니다.","아무 일도 일어나지 않습니다.","한 것 같은데 남은 게 없습니다.",
+        "연락이 없는 하루입니다.","있는 듯 없는 듯 지나갑니다.","기억에 안 남는 날입니다.",
+        "노력이 티가 안 납니다.","찾던 게 안 보입니다.",
+        "조용한 만큼 편하기도 합니다.","오늘은 아무도 나를 부르지 않습니다."],
+        en:["A quiet day that passes without a trace.","Nothing happens at all.","You feel like you did something, but nothing's left to show for it.",
+        "A day with no word from anyone.","You barely register today, one way or the other.","A forgettable kind of day.",
+        "Your effort doesn't show.","The thing you're looking for is nowhere to be found.",
+        "It's as restful as it is uneventful.","No one calls on you today."]},
+      adv:{ko:["오늘은 티 내려 하지 마세요. 안 될 겁니다.","기다리지 말고 먼저 연락하세요.","한 일을 기록해두세요. 안 그러면 사라집니다.",
+        "복습이 필요합니다.","조용한 날을 그냥 즐기세요.","물건 두는 자리를 정해두세요.",
+        "오늘은 쉬어도 아무도 모릅니다.","존재감은 내일 챙기세요.",
+        "혼자 있는 시간을 아깝게 여기지 마세요.","지갑이랑 휴대폰 확인하세요."],
+        en:["Don't try to stand out today — it won't work anyway.","Don't wait — reach out first.","Write down what you did, or it'll vanish.",
+        "You need to review.","Just enjoy the quiet day.","Designate a spot for your things.",
+        "No one will notice if you rest today.","Save the standing-out for tomorrow.",
+        "Don't think of alone time as wasted time.","Check your wallet and phone."]},
+      desc:{ko:"분명히 나온 느낌은 있는데 변기엔 아무것도 없다. 흔적도, 냄새도, 휴지에 묻은 것도 없다. 어디로 갔는지 아직 아무도 설명하지 못했다.",
+            en:"You're certain something happened, but there's nothing in the bowl. No trace, no smell, nothing on the paper. Where it went remains, to this day, unexplained."},
+      art:"" },
+
+    { id:"stuck", name:{ko:"나오다 만 똥",en:"Stuck Poop"}, grade:"F", tier:"lo", s:{love:1,money:1,health:1,study:1},
+      fort:{ko:["오늘은 무리하지 마세요.","어중간한 상태가 계속됩니다.","시작은 했는데 끝이 안 납니다.",
+        "붙잡혀서 시간만 갑니다.","결정을 못 내리는 하루입니다.","될 듯 될 듯 안 됩니다.",
+        "몸이 무거운 날입니다.","진도가 전혀 안 나갑니다.",
+        "애매한 상태로 하루가 끝납니다.","오늘은 되는 일이 별로 없습니다."],
+        en:["Don't push yourself today.","You stay stuck in the in-between.","You started it, but it won't finish.",
+        "Time just slips by while you're stuck.","A day you can't make up your mind.","It keeps almost happening, and never does.",
+        "A day your body feels heavy.","No progress at all.",
+        "The day ends in limbo.","Not much goes right today."]},
+      adv:{ko:["오늘은 그냥 쉬세요. 내일 다시 오면 됩니다.","억지로 끝내려 하지 마세요.","일찍 자는 게 답입니다.",
+        "오래 앉아 있어도 소용없습니다.","오늘은 결제하지 마세요.","결정은 내일로 미루세요.",
+        "안 되는 날도 있습니다.","무리하면 더 오래 걸립니다.",
+        "잠깐 일어나서 걸으세요.","포기도 실력입니다."],
+        en:["Just rest today. You can come back to it tomorrow.","Don't force it to a finish.","Early sleep is the answer.",
+        "Sitting there longer won't help.","Don't make any purchases today.","Push the decision to tomorrow.",
+        "Some days just don't work out.","Push harder and it only takes longer.",
+        "Get up and take a short walk.","Knowing when to quit is a skill too."]},
+      desc:{ko:"머리만 내밀고 그대로 멈췄다. 다시 들어가지도, 나오지도 않는 상태로 사람을 오래 붙잡아 둔다. 16종 중 제일 낮은 등급이고, 재도전까지 평균 4시간 걸린다.",
+            en:"Pokes its head out and stops right there. Won't go back in, won't come out — and holds you hostage the whole time. The lowest grade of all 16 types; the average wait before a second attempt is 4 hours."},
+      art:"" }
+  ];
+
+
+  /* ---------------- 16종 아이콘 ---------------- */
+  var ART = {
+    gold: star(16,28,6.5,GD)+star(84,42,5,GD)+star(74,14,3.6,GD)+
+      ol(lobes([[50,80,30,13],[50,58,23,12],[50,40,15,10]])+tip(50,38,13,22), GD)+
+      shine(60,32,4)+face(50,42,{eyes:"happy",mouth:"grin",s:.95}),
+
+    banana: ol(noodle("M26 76 C22 44, 44 24, 74 30", 24), BR)+
+      shine(47,32,4.4)+face(37,40,{eyes:"happy",s:.85}),
+
+    king: ol(lobes([[50,84,37,13],[50,64,29,12],[50,45,20,10.5]])+tip(50,43,12,21), BR)+
+      shine(61,37,4.4)+face(50,46,{mouth:"grin",s:1}),
+
+    rainbow: (function(){
+      var sh = lobes([[50,80,30,13],[50,58,23,12],[50,41,17,10.5]])+tip(50,36,10.5,18);
+      return '<g fill="'+INK+'" stroke="'+INK+'" stroke-width="'+(K*2)+'" stroke-linejoin="round">'+sh+'</g>'+
+        '<ellipse cx="50" cy="80" rx="30" ry="13" fill="#D2564B"/>'+
+        '<ellipse cx="50" cy="58" rx="23" ry="12" fill="#E09A34"/>'+
+        '<ellipse cx="50" cy="41" rx="17" ry="10.5" fill="#4E9E6C"/>'+
+        tip(50,36,10.5,18).replace('/>',' fill="#4E7CB8"/>')+
+        shine(59,35,3.2)+face(50,43,{eyes:"happy",s:.86});
+    })(),
+
+    thick: ol(lobes([[50,80,32,15],[50,55,25,13]])+tip(50,52,15,22), BR)+
+      shine(63,44,4.4)+face(50,53,{s:1}),
+
+    soft: ol(lobes([[50,84,24,10],[50,70,21,9.5],[50,57,18,9],[50,45,15,8.5],[50,34,12,8]])+tip(50,33,10,17), BR)+
+      shine(56,27,3.2)+face(50,45,{eyes:"line",s:.8}),
+
+    twin: ol(lobes([[31,80,17,10],[31,63,12,8.5]])+tip(31,61,8.5,14)+
+             lobes([[70,82,17,10],[70,65,12,8.5]])+tip(70,63,8.5,14), BR)+
+      face(31,64,{s:.6})+face(70,66,{s:.6}),
+
+    corn: ol(lobes([[50,80,29,13],[50,58,22,11.5],[50,41,15,9.5]])+tip(50,39,13,20), BR)+
+      face(50,43,{mouth:"flat",s:.85})+
+      ['<circle cx="36" cy="76" r="4"','<circle cx="64" cy="83" r="4"','<circle cx="66" cy="62" r="3.6"',
+       '<circle cx="34" cy="57" r="3.6"'].map(function(c){
+        return c+' fill="#F2C93E" stroke="'+INK+'" stroke-width="1.8"/>'; }).join(''),
+
+    rabbit: ol('<circle cx="27" cy="78" r="12"/><circle cx="73" cy="76" r="10"/>'+
+      '<circle cx="50" cy="74" r="14"/><circle cx="39" cy="50" r="10"/><circle cx="68" cy="45" r="8.5"/>', BR)+
+      shine(44,66,3.4)+face(50,74,{s:.78}),
+
+    slide: '<path d="M24 20 C40 38, 54 54, 68 66" stroke="'+BR+'" stroke-width="11" fill="none" '+
+      'stroke-linecap="round" opacity=".45"/>'+
+      '<path d="M30 26 C44 42, 56 56, 68 66" stroke="'+INK+'" stroke-width="2.6" fill="none" '+
+      'stroke-linecap="round" stroke-dasharray="7 8" opacity=".35"/>'+
+      ol('<ellipse cx="66" cy="76" rx="22" ry="13"/>', BR)+
+      shine(55,70,4)+face(66,74,{eyes:"x",mouth:"o",s:.75}),
+
+    sweet: ol('<path d="M50 12 C68 34 72 58 64 77 C58 91 42 91 36 77 C28 58 32 34 50 12 Z"/>', BR)+
+      shine(59,34,3.8)+face(50,50,{eyes:"line",mouth:"wave",s:.85}),
+
+    stone: ol('<path d="M28 82 L19 55 L36 34 L64 28 L87 45 L91 70 L72 87 Z"/>', ST)+
+      face(54,54,{eyes:"line",mouth:"frown",s:.85}),
+
+    water: ol('<ellipse cx="50" cy="70" rx="36" ry="16"/><circle cx="13" cy="45" r="5"/>'+
+      '<circle cx="88" cy="50" r="5.6"/><circle cx="71" cy="29" r="4"/><circle cx="27" cy="27" r="3.4"/>', WA)+
+      shine(33,62,4.6)+face(50,68,{eyes:"line",mouth:"wave",s:.9}),
+
+    fart: '<g stroke="'+INK+'" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-dasharray="8 7" opacity=".5">'+
+      '<path d="M16 62 C32 48, 26 38, 42 26"/><path d="M40 66 C58 50, 50 40, 68 26"/>'+
+      '<path d="M64 70 C82 56, 76 46, 90 36"/></g>'+
+      ol('<ellipse cx="50" cy="80" rx="16" ry="10"/>', BR)+face(50,78,{mouth:"o",s:.6}),
+
+    ghost: '<path d="M14 38 h8 M80 46 h8 M18 64 h7" stroke="'+INK+
+      '" stroke-width="3" stroke-linecap="round" opacity=".38"/>'+
+      ol(lobes([[50,78,26,11],[50,58,20,10],[50,42,13,8.5]])+tip(50,40,11,17), GH)+
+      face(50,44,{mouth:"o",s:.78}),
+
+    stuck: '<path d="M8 84 H92" stroke="'+INK+'" stroke-width="4.5" stroke-linecap="round"/>'+
+      ol('<path d="M26 84 C26 57, 74 57, 74 84 Z"/>', BR)+
+      shine(37,67,4)+face(50,72,{eyes:"x",mouth:"frown",s:.9})+
+      '<path d="M50 44 v-9 M28 50 l-6 -7 M72 50 l6 -7" stroke="'+INK+
+      '" stroke-width="3.2" stroke-linecap="round" opacity=".42"/>'
+  };
+  DDONG.forEach(function(it){ it.art = ART[it.id] || ""; });
+
+  var N = DDONG.length, BEST = DDONG[0].name[LANG], WORST = DDONG[N-1].name[LANG];
+  var KEY = "ddong-daily-v4", HKEY = "ddong-history-v4", mem = {};
+
+  function load(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return mem[k]||null; } }
+  function save(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){ mem[k]=v; } }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function byId(id){ for(var i=0;i<N;i++) if(DDONG[i].id===id) return DDONG[i]; return null; }
+  function idx(id){ for(var i=0;i<N;i++) if(DDONG[i].id===id) return i; return 0; }
+  function dots(n){ var o="",i; for(i=1;i<=5;i++) o+='<i class="pip'+(i<=n?" on":"")+'"></i>';
+    return '<span class="pips">'+o+'</span>'; }
+  var $ = function(id){ return document.getElementById(id); };
+
+  /* 테스트 모드 — 날짜 3번 클릭으로 켜짐. 켜지면 '내일로' 버튼으로 날짜를 넘길 수 있음 */
+  var TEST = false, DAYOFF = 0;
+  try{ TEST = sessionStorage.getItem("ddong-test") === "1";
+       DAYOFF = parseInt(sessionStorage.getItem("ddong-dayoff")||"0", 10) || 0; }catch(e){}
+  if(!TEST) DAYOFF = 0;
+
+  function effDate(){ var d = new Date(); d.setDate(d.getDate() + DAYOFF); return d; }
+  function todayKey(){ var d = effDate();
+    return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+  function dayNum(){ var d = effDate();
+    return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); }
+
+  function toggleTest(){
+    try{
+      if(TEST){ sessionStorage.removeItem("ddong-test"); sessionStorage.removeItem("ddong-dayoff"); }
+      else sessionStorage.setItem("ddong-test","1");
+    }catch(e){}
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    delete mem[KEY]; location.reload();
+  }
+  function nextDay(){
+    try{ sessionStorage.setItem("ddong-dayoff", String(DAYOFF + 1)); }catch(e){}
+    location.reload();
+  }
+
+  /* ---------------- 그날의 운세 조합 ---------------- */
+  function fortuneOf(item){
+    var i = idx(item.id), b = dayNum() + i*17, t = TIER[item.tier];
+    function mod(x, n){ return ((x % n) + n) % n; }
+    function jit(base, off){ return Math.max(1, Math.min(5, base + mod(b + off, 3) - 1)); }
+    return {
+      head:  item.fort[LANG][mod(b, item.fort[LANG].length)],
+      adv:   item.adv[LANG][mod(b*3 + 5, item.adv[LANG].length)],
+      love:  t.love[LANG][mod(b + 1, t.love[LANG].length)],
+      money: t.money[LANG][mod(b*2 + 3, t.money[LANG].length)],
+      health:t.health[LANG][mod(b + 5, t.health[LANG].length)],
+      study: t.study[LANG][mod(b*3 + 2, t.study[LANG].length)],
+      s: { love: jit(item.s.love,0), money: jit(item.s.money,1),
+           health: jit(item.s.health,2), study: jit(item.s.study,3) },
+      color: COLORS[mod(b*5 + 2, COLORS.length)],
+      num:   mod(b*7 + 11, 45) + 1,
+      time:  TIMES[LANG][mod(b + 3, TIMES[LANG].length)]
+    };
+  }
+
+  /* ---------------- shell ---------------- */
+  function shell(){
+    var d = effDate(), days = T.days;
+    var dateStr = d.getFullYear()+". "+String(d.getMonth()+1).padStart(2,"0")+". "+
+      String(d.getDate()).padStart(2,"0")+". ("+days[d.getDay()]+")";
+    return '<header class="masthead">'+
+        '<div class="stampline">'+
+        '<button type="button" class="langBtn" id="langBtn">'+T.langBtnLabel+'</button>'+
+        '<span class="today" id="today" title="'+T.todayTip+'">'+dateStr+
+        (DAYOFF ? T.dayoffSuffix(DAYOFF) : '')+'</span></div>'+
+        '<h1>'+T.h1+'</h1>'+
+        '<hr class="hr"></header>'+
+      '<div class="sheet">'+
+        '<section class="sect stage" aria-live="polite">'+
+          '<div class="dish empty" id="dish">'+buttSVG(true)+'</div>'+
+          '<button class="lever" id="lever">'+T.lever+'</button>'+
+          '<p class="hint" id="hint"></p>'+
+          '<div class="result" id="result" hidden></div>'+
+        '</section>'+
+        '<section class="sect tally" id="tally" hidden></section>'+
+        '<section class="sect history" id="history" hidden>'+
+          '<h3>'+T.historyTitle+'</h3><div class="hlist" id="hlist"></div></section>'+
+        '<section class="sect ledger-sect" id="ledgerSect" hidden>'+
+          '<h3>'+T.ledgerTitle+'</h3><div class="ledger" id="ledger"></div></section>'+
+      '</div>'+
+      '<button class="ledger-btn" id="ledgerBtn" aria-expanded="false" aria-controls="ledger">'+
+      '<span>'+T.ledgerBtn+'</span><span class="chev" id="chev">▾</span></button>';
+  }
+
+  function buildDoc(st){
+    var css = $("pagecss") ? $("pagecss").textContent : document.querySelector("style").textContent;
+    var src = SRC.replace(/var STATE = [\s\S]*?\/\*STATE_END\*\//, 'var STATE = '+JSON.stringify(st)+';/*STATE_END*/');
+    return '<!doctype html><html lang="ko"><head><meta charset="utf-8">'+
+      '<meta name="viewport" content="width=device-width,initial-scale=1">'+
+      '<title>오늘의 똥 운세 뽑기</title>'+FONTLINK+
+      '<style id="pagecss">'+css+'</style></head><body>'+
+      '<div class="wrap" id="root"></div><scr'+'ipt>'+src+'</scr'+'ipt></body></html>';
+  }
+
+  /* ---------------- tally ---------------- */
+  function renderTally(myId){
+    var el = $("tally");
+    if(STATE.d !== todayKey()){ el.hidden = true; return; }
+    var total = 0, max = 0, i, c;
+    for(i=0;i<N;i++){ c = STATE.c[DDONG[i].id]||0; total += c; if(c>max) max = c; }
+    if(!total){ el.hidden = true; return; }
+    var best = null;
+    for(i=0;i<N;i++){ if((STATE.c[DDONG[i].id]||0)===max && !best) best = DDONG[i]; }
+    var bars = DDONG.map(function(it){
+      var n = STATE.c[it.id]||0, hpct = max ? Math.round(n/max*100) : 0;
+      var cls = "tbar" + (it.id===myId ? " mine" : (it.id===best.id ? " best" : ""));
+      return '<div class="'+cls+'" title="'+esc(it.name[LANG])+' — '+n+'">'+
+             (n ? '<em>'+n+'</em>' : '')+'<i style="height:'+Math.max(hpct,3)+'%"></i></div>';
+    }).join("");
+    el.innerHTML = '<h3>'+T.tallyTitle+'</h3>'+
+      '<p class="cnt">'+T.tallyCount(total)+'</p>'+
+      '<div class="tbars">'+bars+'</div>'+
+      '<div class="tfoot"><span>'+T.rankLabel(1)+' '+esc(BEST)+'</span><span>'+T.rankLabel(N)+' '+esc(WORST)+'</span></div>'+
+      '<p class="tnote">'+T.tallyTop('<b>'+esc(best.name[LANG])+'</b>', max)+
+      (myId ? T.tallyMine : '')+'</p>';
+    el.hidden = false;
+  }
+
+  /* ---------------- result ---------------- */
+  function row(label, f, key){
+    return '<div class="sf"><span class="lb">'+label+'</span>'+
+      '<span class="dots">'+dots(f.s[key])+'</span>'+
+      '<span class="tx">'+esc(f[key])+'</span></div>';
+  }
+  function renderResult(item, fresh){
+    var rank = idx(item.id)+1, isGold = rank===1, f = fortuneOf(item);
+    var dish = $("dish");
+    dish.className = "dish" + (fresh ? " pop reveal" : "");
+    dish.innerHTML = svg(item.art);
+
+    $("result").innerHTML =
+      '<div class="gradeRow"><span class="grade'+(isGold?" top":"")+'">'+T.grade+' '+item.grade+'</span>'+
+      '<span class="rankno">'+T.rankLabel(rank)+'</span></div>'+
+      '<h2 class="name'+(isGold?" gold":"")+'">'+esc(item.name[LANG])+'</h2>'+
+      '<p class="fortune">'+esc(f.head)+'</p>'+
+      '<div class="sfs">'+row(T.love,f,"love")+row(T.money,f,"money")+
+        row(T.health,f,"health")+row(T.study,f,"study")+'</div>'+
+      '<div class="lucky">'+
+        '<div><div class="k">'+T.luckyColor+'</div><div class="v">'+esc(f.color.n[LANG])+'</div></div>'+
+        '<div><div class="k">'+T.luckyNumber+'</div><div class="v">'+f.num+'</div></div>'+
+        '<div><div class="k">'+T.luckyTime+'</div><div class="v">'+esc(f.time)+'</div></div>'+
+      '</div>'+
+      '<div class="advice"><b>'+T.adviceTitle+'</b>'+esc(f.adv)+'</div>'+
+      '<div class="note"><b>'+T.aboutTitle+'</b>'+esc(item.desc[LANG])+'</div>'+
+      (TEST ? '<div class="testbar"><span class="testchip">'+T.testChip+'</span>'+
+          '<button class="again" id="again">'+T.nextDayBtn+'</button></div>' : '');
+    $("result").hidden = false;
+    if(fresh) $("result").classList.add("pop");
+    $("lever").disabled = false;
+    $("lever").textContent = T.leverAgain;
+    $("hint").hidden = true;
+    if(TEST) $("again").addEventListener("click", nextDay);
+  }
+
+
+  function renderHistory(){
+    var h = load(HKEY) || [];
+    if(!h.length){ $("history").hidden = true; return; }
+    $("history").hidden = false;
+    $("hlist").innerHTML = h.slice(0,7).map(function(r){
+      var it = byId(r.id); if(!it) return "";
+      var md = r.date.slice(5).replace("-",".");
+      return '<div class="hitem" title="'+md+' '+esc(it.name[LANG])+'"><div class="hdish">'+svg(it.art)+
+             '</div><span>'+md+'</span></div>';
+    }).join("");
+  }
+
+  /* ---------------- shared publish ---------------- */
+  function nextState(id){
+    var t = todayKey(), c = {};
+    if(STATE.d === t) for(var k in STATE.c) c[k] = STATE.c[k];
+    c[id] = (c[id]||0) + 1;
+    return {d:t, c:c};
+  }
+  function pushTally(id){
+    if(!window.claude || !claude.use) return;
+    claude.use("artifact").then(function(art){
+      if(!art) return;
+      return art.publish(buildDoc(nextState(id)));
+    }).catch(function(){});
+  }
+
+  /* ---------------- 효과음: 뿌직 ---------------- */
+  var FART_SND = "data:audio/mpeg;base64,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";
+  function playFart(){
+    try{
+      var a = new Audio(FART_SND);
+      a.volume = .9;
+      a.play()["catch"](function(){});
+    }catch(e){}
+  }
+
+  /* ---------------- draw ---------------- */
+  function draw(){
+    var pick = DDONG[Math.floor(Math.random()*N)];
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var rec = {date: todayKey(), id: pick.id};
+    var dish = $("dish"), lever = $("lever");
+
+    function commit(){
+      save(KEY, rec);
+      var h = load(HKEY) || []; h.unshift(rec); save(HKEY, h.slice(0,7));
+      if(!reduce) playFart();
+      renderResult(pick, true); renderHistory(); renderTally(pick.id);
+      if(!TEST) setTimeout(function(){ pushTally(pick.id); }, 1400);
+    }
+    if(reduce){ commit(); return; }
+
+    lever.disabled = true; lever.textContent = T.opening;
+    dish.innerHTML = buttSVG(true);
+    dish.className = "dish shaking";
+    setTimeout(function(){ dish.className = "dish opening"; }, 130);
+    setTimeout(commit, 130 + 220);
+  }
+
+  /* ---------------- boot ---------------- */
+  document.getElementById("root").innerHTML = shell();
+  document.title = T.title;
+  document.documentElement.lang = LANG;
+  $("lever").addEventListener("click", draw);
+  $("langBtn").addEventListener("click", function(){ setLang(LANG==="ko"?"en":"ko"); });
+
+  var taps = 0, tapT = null;
+  $("today").addEventListener("click", function(){
+    taps++; clearTimeout(tapT);
+    tapT = setTimeout(function(){ taps = 0; }, 900);
+    if(taps >= 3){ taps = 0; toggleTest(); }
+  });
+  if(TEST) $("hint").innerHTML = '<span class="testchip">'+T.testChipHint+'</span>';
+
+  var saved = load(KEY), myId = null;
+  if(saved && saved.date === todayKey() && byId(saved.id)){ myId = saved.id; renderResult(byId(saved.id), false); }
+  renderHistory();
+  renderTally(myId);
+
+  var built = false;
+  $("ledgerBtn").addEventListener("click", function(){
+    var open = $("ledgerSect").hidden;
+    if(open && !built){
+      $("ledger").innerHTML = DDONG.map(function(it,i){
+        var f = fortuneOf(it);
+        return '<article class="entry'+(i===0?" first":"")+'">'+
+          '<div class="edish">'+svg(it.art)+'</div><div>'+
+          '<div class="rk">'+String(i+1).padStart(2,"0")+' / '+N+' · '+T.grade+' '+it.grade+'</div>'+
+          '<h4>'+esc(it.name[LANG])+'</h4>'+
+          '<p class="f">'+esc(f.head)+'</p><p class="d">'+esc(it.desc[LANG])+'</p></div></article>';
+      }).join("");
+      built = true;
+    }
+    $("ledgerSect").hidden = !open;
+    $("ledgerBtn").setAttribute("aria-expanded", String(open));
+    $("chev").textContent = open ? "▴" : "▾";
+    if(open) $("ledgerSect").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+})();
+</script>
